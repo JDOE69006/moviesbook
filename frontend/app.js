@@ -29,16 +29,71 @@ async function loadFilms() {
 
 
 
-function showFilmDetails(id) {
+async function showFilmDetails(id) {
     const modal = document.getElementById('modal-test');
     const content = document.getElementById('modal-test-content');
     if (!modal || !content) {
         alert('Erreur : la modal de test n\'existe pas dans le DOM.');
         return;
     }
+    // Récupérer les infos détaillées du film
+    const res = await fetch(`http://localhost:5000/api/films/${id}`);
+    const film = await res.json();
     document.body.classList.add('modal-blur');
     modal.style.display = 'flex';
-    content.innerText = 'Test modal pour film #' + id;
+
+    // Helpers debug
+    const titre = film.titre || '<span style="color:#d32f2f">donnée manquante</span>';
+    const annee = film.annee || '<span style="color:#d32f2f">donnée manquante</span>';
+    const duration = film.duration || '<span style="color:#d32f2f">donnée manquante</span>';
+
+    // Catégories sous forme de boutons arrondis
+    let categoriesHtml = '';
+    if (film.categorie) {
+        const cats = film.categorie.split('|').map(cat => cat.trim()).filter(Boolean);
+        categoriesHtml = cats.map(cat => `<span class="modal-cat-btn">${cat}</span>`).join(' ');
+    } else {
+        categoriesHtml = `<span class="modal-cat-btn missing">catégorie manquante</span>`;
+    }
+
+    const cover = film.image_url ? `<img src="${film.image_url}" alt="cover" style="width:180px;height:270px;object-fit:cover;border-radius:10px;box-shadow:0 2px 8px #0002;" onerror="this.onerror=null;this.src='assets/cover/placeholder.png';">` : `<div style='width:180px;height:270px;background:#444;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;'>Image<br>manquante</div>`;
+
+    // Bande annonce intégrée (YouTube)
+    let trailerEmbed = '';
+    if (film.bande_annonce && film.bande_annonce.includes('youtube.com')) {
+        const ytId = film.bande_annonce.split('v=')[1]?.split('&')[0];
+        if (ytId) {
+            trailerEmbed = `<iframe width="320" height="270" src="https://www.youtube.com/embed/${ytId}" frameborder="0" allowfullscreen style="border-radius:10px;"></iframe>`;
+        }
+    }
+    if (!trailerEmbed) {
+        trailerEmbed = `<div style='width:320px;height:270px;background:#222;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.95em;'>Bande annonce<br>manquante</div>`;
+    }
+
+        content.innerHTML = `
+            <div style="display:flex;flex-direction:column;align-items:flex-start;gap:0.5em;">
+                <div style="font-size:2em;font-weight:bold;text-align:left;margin-bottom:0.1em;">${titre}</div>
+                <div style="display:flex;align-items:center;gap:1em;font-size:1.1em;color:#bbb;margin-bottom:0.5em;">
+                    <span>${annee}</span> <span>-</span> <span>${duration} min</span>
+                </div>
+                <div style="display:flex;flex-direction:row;gap:1.2em;width:100%;justify-content:flex-start;align-items:flex-start;">
+                    <div style="display:flex;flex-direction:column;align-items:center;">
+                        ${cover}
+                        <div style="margin-top:0.7em;display:flex;flex-wrap:wrap;gap:0.5em;justify-content:center;">${categoriesHtml}</div>
+                    </div>
+                    ${trailerEmbed}
+                </div>
+                <div style="margin-top:1.2em;width:100%;">
+                    <div><b>Résumé :</b> ${film.resume}</div>
+                    <div><b>Anecdotes :</b> ${film.anecdotes}</div>
+                    <div><b>Distribution :</b> ${film.distribution}</div>
+                    <div><b>Distributeurs :</b> ${film.distributeurs}</div>
+                    <div><b>Commentaires :</b> ${film.commentaires}</div>
+                    <div><b>Âge recommandé :</b> ${film.age_recommande}</div>
+                    <div><b>Notes :</b> Globale ${film.note_globale} | Violence ${film.note_violence} | Sexe ${film.note_sexe} | Humour ${film.note_humour} | Peur ${film.note_peur}</div>
+                </div>
+            </div>
+        `;
 }
 
 // Fermer la modal de test avec la croix
@@ -49,6 +104,7 @@ document.addEventListener('DOMContentLoaded', function() {
         closeBtn.onclick = function(e) {
             modal.style.display = 'none';
             document.body.classList.remove('modal-blur');
+            document.getElementById('modal-test-content').innerHTML = '';
             e.stopPropagation();
         };
     }
@@ -58,6 +114,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (e.target === modal) {
                 modal.style.display = 'none';
                 document.body.classList.remove('modal-blur');
+                document.getElementById('modal-test-content').innerHTML = '';
             }
         };
     }

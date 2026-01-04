@@ -1,3 +1,58 @@
+.modal-card-dark {
+	background: #232a34;
+	color: #fff;
+	border-radius: 16px;
+	box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+	max-width: 1000px;
+	margin: 3rem auto;
+	padding: 2rem;
+	position: relative;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+.modal-left {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	padding: 2rem 1.5rem 2rem 2rem;
+	min-width: 220px;
+	max-width: 240px;
+}
+.modal-left img {
+	width: 180px;
+	height: 260px;
+	object-fit: cover;
+	border-radius: 12px;
+	margin-bottom: 1.2rem;
+}
+.modal-title {
+	font-size: 1.5rem;
+	font-weight: bold;
+	margin-bottom: 0.5rem;
+	text-align: left;
+}
+.modal-year {
+	font-size: 1rem;
+	color: #ff9800;
+	margin-bottom: 0.5rem;
+	text-align: left;
+}
+.modal-categories {
+	margin-bottom: 1rem;
+	text-align: left;
+}
+.modal-right {
+	flex: 1;
+	padding: 2rem 2rem 2rem 0;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+.modal-details {
+	margin-top: 1.5rem;
+}
 body.modal-blur > *:not(#modal-test) {
 	filter: blur(10px) brightness(0.3);
 	transition: filter 0.2s;
@@ -8,6 +63,18 @@ h1 { text-align: center; margin: 1rem 0; }
 .film-card { background: #f6f6f8; color: #232a34; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.10); overflow: hidden; display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: transform 0.1s; }
 .film-card:hover { transform: scale(1.04); }
 .film-card img { width: 100%; height: 300px; object-fit: cover; }
-.film-card .title { font-weight: bold; margin: 0.7rem 0 0.3rem 0; text-align: center; font-size: 1.15em; color: #232a34; }
-.film-card .year { color: #555; font-size: 1em; margin-bottom: 0.7rem; }
 #loader { text-align: center; padding: 1.2rem; color: #555; font-size: 1.1em; }
+.modal-cat-btn {
+	display: inline-block;
+	background: #222;
+	color: #fff;
+	border-radius: 18px;
+	padding: 4px 16px;
+	margin: 0 4px;
+	font-size: 1rem;
+	opacity: 0.95;
+	border: 2px solid #ff9800;
+	pointer-events: none;
+	box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+	transition: background 0.2s, border-color 0.2s;
+}
