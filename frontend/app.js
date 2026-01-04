@@ -36,6 +36,7 @@ function showFilmDetails(id) {
         alert('Erreur : la modal de test n\'existe pas dans le DOM.');
         return;
     }
+    document.body.classList.add('modal-blur');
     modal.style.display = 'flex';
     content.innerText = 'Test modal pour film #' + id;
 }
@@ -47,13 +48,17 @@ document.addEventListener('DOMContentLoaded', function() {
     if (closeBtn) {
         closeBtn.onclick = function(e) {
             modal.style.display = 'none';
+            document.body.classList.remove('modal-blur');
             e.stopPropagation();
         };
     }
     // Fermer la modal en cliquant sur le fond
     if (modal) {
         modal.onclick = function(e) {
-            if (e.target === modal) modal.style.display = 'none';
+            if (e.target === modal) {
+                modal.style.display = 'none';
+                document.body.classList.remove('modal-blur');
+            }
         };
     }
 });
