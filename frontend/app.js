@@ -27,10 +27,41 @@ async function loadFilms() {
     loading = false;
 }
 
+
+
 function showFilmDetails(id) {
-    // À compléter : affichage modal ou page détail
-    alert('Détail du film ' + id);
+    const modal = document.getElementById('modal-test');
+    const content = document.getElementById('modal-test-content');
+    if (!modal || !content) {
+        alert('Erreur : la modal de test n\'existe pas dans le DOM.');
+        return;
+    }
+    modal.style.display = 'flex';
+    content.innerText = 'Test modal pour film #' + id;
 }
+
+// Fermer la modal de test avec la croix
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('modal-test');
+    const closeBtn = document.getElementById('modal-test-close');
+    if (closeBtn) {
+        closeBtn.onclick = function(e) {
+            modal.style.display = 'none';
+            e.stopPropagation();
+        };
+    }
+    // Fermer la modal en cliquant sur le fond
+    if (modal) {
+        modal.onclick = function(e) {
+            if (e.target === modal) modal.style.display = 'none';
+        };
+    }
+});
+
+
+
+
+// Listener modal de test (ajouté dans DOMContentLoaded si besoin)
 
 window.addEventListener('scroll', () => {
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 200) {
