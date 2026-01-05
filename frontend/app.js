@@ -70,9 +70,29 @@ async function showFilmDetails(id) {
         trailerEmbed = `<div style='width:320px;height:270px;background:#222;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.95em;'>Bande annonce<br>manquante</div>`;
     }
 
+        // Génération des badges d'âge avec code couleur
+        function ageBadge(age, type) {
+            if (age === undefined || age === null || age === '' || isNaN(age)) return '';
+            let color = '#4caf50'; // vert par défaut
+            if (age >= 18) color = '#d32f2f'; // rouge
+            else if (age >= 16) color = '#ff9800'; // orange
+            else if (age >= 12) color = '#1976d2'; // bleu
+            else if (age >= 6) color = '#43a047'; // vert foncé
+            const tooltip = type === 'interdit' ? 'déconseillé pour' : 'recommandé à partir de';
+            return `<span class="age-badge age-badge-${type}" style="background:${color};margin-left:0.5em;" title="${tooltip} ${age}+">${type === 'interdit' ? '⛔' : '🎯'} ${age}+</span>`;
+        }
+
+        const badges = `
+            ${ageBadge(film.age_interdit, 'interdit')}
+            ${ageBadge(film.age_recommande, 'recommande')}
+        `;
+
         content.innerHTML = `
             <div style="display:flex;flex-direction:column;align-items:flex-start;gap:0.5em;">
-                <div style="font-size:2em;font-weight:bold;text-align:left;margin-bottom:0.1em;">${titre}</div>
+                <div style="display:flex;align-items:center;justify-content:space-between;width:100%;margin-bottom:0.1em;">
+                    <span style="font-size:2em;font-weight:bold;text-align:left;">${titre}</span>
+                    <span>${badges}</span>
+                </div>
                 <div style="display:flex;align-items:center;gap:1em;font-size:1.1em;color:#bbb;margin-bottom:0.5em;">
                     <span>${annee}</span> <span>-</span> <span>${duration} min</span>
                 </div>
@@ -84,12 +104,7 @@ async function showFilmDetails(id) {
                     ${trailerEmbed}
                 </div>
                 <div style="margin-top:1.2em;width:100%;">
-                    <div><b>Résumé :</b> ${film.resume}</div>
-                    <div><b>Anecdotes :</b> ${film.anecdotes}</div>
-                    <div><b>Distribution :</b> ${film.distribution}</div>
-                    <div><b>Distributeurs :</b> ${film.distributeurs}</div>
-                    <div><b>Commentaires :</b> ${film.commentaires}</div>
-                    <div><b>Âge recommandé :</b> ${film.age_recommande}</div>
+                    <div class="modal-resume">${film.resume}</div>
                     <div><b>Notes :</b> Globale ${film.note_globale} | Violence ${film.note_violence} | Sexe ${film.note_sexe} | Humour ${film.note_humour} | Peur ${film.note_peur}</div>
                 </div>
             </div>

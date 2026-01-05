@@ -8,7 +8,7 @@ films = [
         'titre': 'Avatar',
         'annee': 2009,
         'duration': 162,
-        'resume': "Un marine paraplégique est envoyé sur Pandora.",
+        'resume': "Un marine paraplégique envoyé sur la lune Pandora pour une mission unique est tiraillé entre suivre ses ordres et protéger le monde qu'il considère le sien.",
         'anecdotes': "Premier film à dépasser 2 milliards de dollars.",
         'distribution': "Sam Worthington, Zoe Saldana",
         'categorie': "Science-fiction",
