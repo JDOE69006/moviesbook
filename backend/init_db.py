@@ -19,7 +19,13 @@ CREATE TABLE IF NOT EXISTS films (
     note_sexe REAL,
     note_humour REAL,
     note_peur REAL,
-    age_recommande TEXT,
+    note_drogue REAL,
+    note_utilisateur REAL,
+    age_interdit REAL,
+    age_recommande REAL,
+    realisateur TEXT,
+    scenariste TEXT,
+    duration REAL,
     image_url TEXT
 )
 ''')
