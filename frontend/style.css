@@ -1,3 +1,87 @@
+.resume-row-modal {
+	width: 740px;
+	max-width: 98vw;
+	margin: 0.2em 0.5em 0.8em 0.5em;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: flex-start;
+}
+.categories-row-modal {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	align-items: center;
+	width: 740px;
+	max-width: 98vw;
+	margin: 0.5em 0.5em 0.2em 0.5em;
+	gap: 0.7em;
+}
+.note-bars-vertical {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	height: 270px;
+	min-width: 40px;
+	max-width: 60px;
+	gap: 0.15em;
+	margin-left: 0.2em;
+	margin-top: 0.2em;
+}
+.note-bar-row {
+	display: flex;
+	align-items: center;
+	height: 2.2em;
+	min-width: 36px;
+	max-width: 60px;
+	justify-content: flex-end;
+	gap: 0.12em;
+}
+.note-icon {
+	font-size: 1.2em;
+	margin-left: 0.12em;
+	width: 1.2em;
+	text-align: center;
+	display: inline-block;
+	cursor: help;
+}
+.note-bar-row {
+	display: flex;
+	align-items: center;
+	height: 1.7em;
+	min-width: 110px;
+	max-width: 160px;
+}
+.note-bar, .note-bar-grayed {
+	display: flex;
+	align-items: center;
+	gap: 0.10em;
+	margin-right: 0.2em;
+}
+.note-dot {
+	width: 0.85em;
+	height: 0.85em;
+	border-radius: 50%;
+	background: #444;
+	border: 1.2px solid #222;
+	display: inline-block;
+	margin-right: 0.05em;
+	transition: background 0.2s;
+}
+.note-bar-grayed .note-dot {
+	background: #888 !important;
+	border: 1.5px solid #bbb;
+}
+.note-label {
+	font-size: 0.98em;
+	color: #bbb;
+	margin-left: 0.2em;
+	min-width: 3.5em;
+	text-align: left;
+	letter-spacing: 0.5px;
+}
 .age-badge {
 	display: inline-block;
 	color: #fff;
@@ -26,7 +110,7 @@
 	color: #fff;
 	box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 	white-space: pre-line;
-	max-width: 480px;
+	max-width: none;
 	width: 100%;
 	overflow-x: auto;
 }

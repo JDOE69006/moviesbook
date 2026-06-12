@@ -1,0 +1,25 @@
+En te basant sur allocine.fr ou imdb pour les données et sur la colonne "Titre"  du fichier CSV pour chercher les films : peux tu remplir les colonne scenariste, realisateur, distributeur, duration, trailer_url, resume du fichier csv ci joint?
+Quelques précisions en fonction des colonnes :
+- Si tu trouves plusieurs données pour une seule colonne, merci de séparer avec un |. Par exemple, pour le film Snake eyes, je sais qu'il existe 2  scénaristes : Brian De Palma et David Koepp. Il faudra donc renseigner : Brian De Palma|David Koepp.
+- Pour la duration, je veux la durée du film en minutes.
+- Pour la colonne Distributeur, n'ajoute que le distributeur principal. Dans le doute, ajoutes en plusieurs et utiliser la règle du | pour les délimiter.
+- Pour la colonne trailer_url, je veux juste une url qui pointe sur la bande annonce sur Youtube uniquement.
+- Pour la colonne Resume, je veux le pitch/scenario utilisé par ces sites, sans formatage.
+
+Important :
+- Reprends le nom du fichier d'origine et rajoute la mention "_generated" pour le nouveau fichier.
+- Afin de limiter ta consommation de ressources, limite tes sources à 3 pour chaque titre.
+- La bonne validité des données est importante. Si tu ne trouves pas, ce n'est pas grave, mais je ne veux pas que tu inventes/fabules/imagines/hallucines. Je préfère une colonne vide, qu'une colonne contenant une fausse information.
+- Attention à l'encodage, pour les accents.
+- vérifie bien que le compte est le même entre la source et le nouveau fichier.
+
+----------------------------------------------------------------------------
+
+Avec le csv suivant, peux tu le découper en suivant ces règles :
+- Découpe toutes les 10 lignes dans un nouveau fichier au format CSV, qui aura pour titre : lot-[numero de depart]-[numerofin].csv
+Par exemple : lot-1-10.csv, puis lot-11-20.csv, puis lot 21-30, etc...
+- Pour chaque fichier, tu récupéras l'entête du CSV.
+- Ne modifie aucune données.
+- Au final, je devrais avoir le même nombre de lignes totales entre le fichier csv d'origine et les différents csv (hors entête reporté dans chaque fichier). Vérifie bien le compte.
+
+En résumé : je veux un découpage de mon csv d'origine, en plusieurs fichiers de 10 lignes (hors entête) et qui contiennent tous le même entête.

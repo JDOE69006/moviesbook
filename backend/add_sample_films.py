@@ -1,6 +1,7 @@
 import sqlite3
 
 import os
+import random
 
 films = [
     {
@@ -68,7 +69,7 @@ films = [
         'note_sexe': 3.0,
         'note_humour': 2.0,
         'note_peur': 2.0,
-        'note_drogue': 0.0,
+        'note_drogue': 1.0,
         'note_utilisateur': 0.0,
         'age_interdit': 0.0,
         'age_recommande': 10.0,
@@ -428,16 +429,22 @@ films = [
 conn = sqlite3.connect('movies.db')
 c = conn.cursor()
 for film in films:
+    # Nettoyage et ajout des notes demandées
+    film.pop('note_humour', None)
+    film.pop('note_peur', None)
+    # Ajout de note_complexite et note_language si manquantes ou forcées aléatoires
+    film['note_complexite'] = random.choice([None, round(random.uniform(0, 5), 1)])
+    film['note_language'] = random.choice([None, round(random.uniform(0, 5), 1)])
     img_path = f"assets/cover/{film['id']}.jpg"
     c.execute('''INSERT INTO films (
         titre, resume, anecdotes, distribution, categorie, annee, distributeurs, commentaires, bande_annonce,
-        note_globale, note_violence, note_sexe, note_humour, note_peur, note_drogue, note_utilisateur,
+        note_globale, note_violence, note_sexe, note_complexite, note_language, note_drogue, note_utilisateur,
         age_interdit, age_recommande, realisateur, scenariste, duration, image_url
     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
         (
             film['titre'], film['resume'], film['anecdotes'], film['distribution'], film['categorie'], film['annee'],
             film['distributeurs'], film['commentaires'], film['bande_annonce'], film['note_globale'], film['note_violence'],
-            film['note_sexe'], film['note_humour'], film['note_peur'], film.get('note_drogue', 0.0), film.get('note_utilisateur', 0.0),
+            film['note_sexe'], film.get('note_complexite', 0.0), film.get('note_language', 0.0), film.get('note_drogue', 0.0), film.get('note_utilisateur', 0.0),
             film.get('age_interdit', 0.0), film.get('age_recommande', 0.0), film.get('realisateur', ''), film.get('scenariste', ''),
             film.get('duration', 0.0), img_path
         )

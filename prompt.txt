@@ -1,0 +1,31 @@
+l'objectif est de faire une application web, accessible par un site web et potentiellement par application mobile, plus tard, donc technologiquement compatible. Il faut donc que l'application soit moderne, réactive et que sa navigation soit accessible sur un téléphone portable.
+D'un point de vue technologie, je veux me baser sur une technologie simple pour le frontend (pas de react) et sur une base de données.
+Cette application web aura pour but de lister une liste de films (99 en 1er lieu), affichées sous forme de cartes à collectionner. Chaque film aura un contenu conséquence, comprenant différentes données : résumé du films, anecdotes, distribution, catégorie, année de sortie, distributeurs, commentaires de l'auteur, bandes annonces, note globale, notes pour justifier la présence de violence, de sexe, d'humour ou de peur, âge recommandée ou conseillé, etc...
+La pge d'accueil doit donc afficher 99 cases sous forme de vignettes rectangulaire dans le sens "Portrait" affichées de manière dynamique en quadrillage. Toutes les cases ne doivent pas être visibles sur la même page. Un scroll infini doit permettre de voir les différentes cartes.
+
+#essai avec python/flask
+
+Tu devras t'inspirer des sites imdb et metacritic pour la structure.
+les utilisateurs pourront :
+- s'inscrire à l'aide d'un email, un nom d'utilisateur, et un mot de passe. Lors de cette inscription, un lien de validation sera envoyé par email, pour valider l'inscription.
+- se connecter avec un couple email ou nom d'utilisateur + un mot de passe. Il sera possible de réinitialiser son mot de passe, en renvoyant un lien dédié par email.
+- Mettre en favoris certains films.
+- Indiquer les films déjà vus.
+- Noter les films déjà vus.
+Au niveau de la navigation, le site doit avoir un header en permanence, contenant le nom du site à gauche, une barre de recherche, et un bouton à droite pour s'inscrire ou se connecter, ou pour afficher le menu utilisateur quand il est connecté.
+voici les grandes lignes.
+Pour commencer, tout en gardant en mémoire ces informations, peux tu me générer le site avec le bandeau et le nécessaire pour s'inscrire et se connecter.
+
+Dans un terminal :
+Pour initialiser la bdd
+E:\DEV\moviesbook\backend> py .\init_db.py
+pour ajouter des films à la bdd
+E:\DEV\moviesbook\backend> py .\add_sample_films.py
+pour la vider
+PS E:\DEV\moviesbook\backend> py .\clear_films_table.py
+
+Dans un autre terminal, pour lancer le site :
+E:\DEV\moviesbook\backend> py .\app.py
+
+Pour accéder au site :
+file:///E:/DEV/moviesbook/frontend/index.html

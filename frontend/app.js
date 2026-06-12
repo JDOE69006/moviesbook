@@ -60,14 +60,16 @@ async function showFilmDetails(id) {
 
     // Bande annonce intégrée (YouTube)
     let trailerEmbed = '';
+    const trailerWidth = 320;
+    const trailerHeight = 270;
     if (film.bande_annonce && film.bande_annonce.includes('youtube.com')) {
         const ytId = film.bande_annonce.split('v=')[1]?.split('&')[0];
         if (ytId) {
-            trailerEmbed = `<iframe width="320" height="270" src="https://www.youtube.com/embed/${ytId}" frameborder="0" allowfullscreen style="border-radius:10px;"></iframe>`;
+            trailerEmbed = `<iframe width="${trailerWidth}" height="${trailerHeight}" src="https://www.youtube.com/embed/${ytId}" frameborder="0" allowfullscreen style="border-radius:10px;display:block;"></iframe>`;
         }
     }
     if (!trailerEmbed) {
-        trailerEmbed = `<div style='width:320px;height:270px;background:#222;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.95em;'>Bande annonce<br>manquante</div>`;
+        trailerEmbed = `<div style='width:${trailerWidth}px;height:${trailerHeight}px;background:#222;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.95em;'>Bande annonce<br>manquante</div>`;
     }
 
         // Génération des badges d'âge avec code couleur
@@ -87,6 +89,34 @@ async function showFilmDetails(id) {
             ${ageBadge(film.age_recommande, 'recommande')}
         `;
 
+        // Génération des barres de notes graduées
+        function noteBar(note, color, icon, label) {
+            let html = '';
+            if (note === undefined || note === null || note === '' || isNaN(note)) {
+                html = `<span class=\"note-bar-grayed\" title=\"non défini\">`;
+                for (let i = 0; i < 5; i++) html += `<span class=\"note-dot\"></span>`;
+                html += `</span>`;
+            } else {
+                html = `<span class=\"note-bar\" title=\"${label} : ${note}/5\">`;
+                for (let i = 1; i <= 5; i++) {
+                    html += `<span class=\"note-dot\" style=\"background:${i <= note ? color : '#444'}\"></span>`;
+                }
+                html += `</span>`;
+            }
+            // Icône à droite, avec tooltip
+            return `<div class=\"note-bar-row\">${html}<span class=\"note-icon\" title=\"${label}\">${icon}</span></div>`;
+        }
+        // Icônes : violence = poing, sexe = cœur, complexité = cerveau, langage = bulle BD, drogue = coupe
+        const notesHtml = `
+            <div class="note-bars-vertical">
+                ${noteBar(film.note_violence, '#d32f2f', '👊', 'Violence')}
+                ${noteBar(film.note_sexe, '#e91e63', '❤️', 'Sexe')}
+                ${noteBar(film.note_complexite, '#ffeb3b', '🧠', 'Complexité')}
+                ${noteBar(film.note_language, '#1976d2', '💬', 'Langage')}
+                ${noteBar(film.note_drogue, '#8d6e63', '🍾', 'Drogue')}
+            </div>
+        `;
+
         content.innerHTML = `
             <div style="display:flex;flex-direction:column;align-items:flex-start;gap:0.5em;">
                 <div style="display:flex;align-items:center;justify-content:space-between;width:100%;margin-bottom:0.1em;">
@@ -96,17 +126,18 @@ async function showFilmDetails(id) {
                 <div style="display:flex;align-items:center;gap:1em;font-size:1.1em;color:#bbb;margin-bottom:0.5em;">
                     <span>${annee}</span> <span>-</span> <span>${duration} min</span>
                 </div>
-                <div style="display:flex;flex-direction:row;gap:1.2em;width:100%;justify-content:flex-start;align-items:flex-start;">
-                    <div style="display:flex;flex-direction:column;align-items:center;">
+                <div style="display:flex;flex-direction:row;width:740px;max-width:98vw;justify-content:space-between;align-items:flex-start;">
+                    <div style='display:flex;flex-direction:column;align-items:flex-start;width:180px;min-width:180px;max-width:180px;'>
                         ${cover}
-                        <div style="margin-top:0.7em;display:flex;flex-wrap:wrap;gap:0.5em;justify-content:center;">${categoriesHtml}</div>
                     </div>
-                    ${trailerEmbed}
+                    <div style='width:24px;min-width:24px;max-width:24px;'></div>
+                    <div style='display:flex;flex-direction:column;align-items:flex-start;width:${trailerWidth}px;min-width:${trailerWidth}px;max-width:${trailerWidth}px;'>${trailerEmbed}</div>
+                    <div style='display:flex;flex:1;'></div>
+                    <div style='display:flex;flex-direction:column;align-items:flex-end;width:60px;min-width:60px;max-width:60px;margin-right:8px;'>${notesHtml}</div>
                 </div>
-                <div style="margin-top:1.2em;width:100%;">
-                    <div class="modal-resume">${film.resume}</div>
-                    <div><b>Notes :</b> Globale ${film.note_globale} | Violence ${film.note_violence} | Sexe ${film.note_sexe} | Humour ${film.note_humour} | Peur ${film.note_peur}</div>
-                </div>
+                <div class="categories-row-modal">${categoriesHtml}</div>
+                <div class="resume-row-modal"><div class='modal-resume'>${film.resume}</div></div>
+                <!-- résumé déplacé dans resume-row-modal -->
             </div>
         `;
 }
